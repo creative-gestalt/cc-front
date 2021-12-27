@@ -10,8 +10,16 @@ export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {
+    async deployCommandCenter(): Promise<boolean> {
+      await axios.get(`${url}/deploy_commandcenter`);
+      return true;
+    },
     async deployDreamscape(): Promise<boolean> {
       await axios.get(`${url}/deploy_dreamscape`);
+      return true;
+    },
+    async deployBillTracker(): Promise<boolean> {
+      await axios.get(`${url}/deploy_billtracker`);
       return true;
     },
   },
