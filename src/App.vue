@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        Command Center
-      </div>
+      <div class="d-flex align-center">Command Center</div>
 
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -25,3 +23,20 @@ export default Vue.extend({
   }),
 });
 </script>
+<style lang="scss">
+$scrollbar-bg-color: #171717;
+$scrollbar-thumb-color: #898989;
+
+html {
+  background-color: black;
+  overflow: hidden;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: $scrollbar-bg-color;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background-color: $scrollbar-thumb-color;
+}
+</style>
