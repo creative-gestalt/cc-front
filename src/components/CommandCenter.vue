@@ -33,7 +33,43 @@
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
-            <v-btn width="100%">deploy</v-btn>
+            <v-btn
+              @click="deployBillTracker"
+              :loading="billTrackerLoading"
+              width="100%"
+            >
+              deploy
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="6">
+        <v-card>
+          <v-card-title>Restart Plex</v-card-title>
+          <v-card-actions>
+            <v-btn
+              @click="restartPlexServices"
+              :loading="plexLoading"
+              width="100%"
+            >
+              restart
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <v-card-title>Remount Drive</v-card-title>
+          <v-card-actions>
+            <v-btn
+              @click="remountWDBlackDrive"
+              :loading="remountDriveLoading"
+              width="100%"
+            >
+              remount
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -67,7 +103,7 @@
             dense
           ></v-text-field>
           <v-card-actions>
-            <v-btn>submit</v-btn>
+            <v-btn @click="createService">submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -81,7 +117,7 @@
             dense
           ></v-text-field>
           <v-card-actions>
-            <v-btn>submit</v-btn>
+            <v-btn @click="removeService">submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -101,6 +137,10 @@ export default Vue.extend({
     commandCenterLoading: false,
     dreamscapeLoading: false,
     billTrackerLoading: false,
+    plexLoading: false,
+    createServiceLoading: false,
+    removeServiceLoading: false,
+    remountDriveLoading: false,
   }),
   methods: {
     async deployCommandCenter(): Promise<void> {
@@ -117,6 +157,28 @@ export default Vue.extend({
       this.billTrackerLoading = true;
       await this.$store.dispatch("deployBillTracker");
       this.billTrackerLoading = false;
+    },
+    async restartPlexServices(): Promise<void> {
+      this.plexLoading = true;
+      await this.$store.dispatch("restartPlexServices");
+      this.plexLoading = false;
+    },
+    async createService(): Promise<void> {
+      this.createServiceLoading = true;
+      if (Object.keys(this.newService).length > 0)
+        await this.$store.dispatch("createService", this.newService);
+      this.createServiceLoading = false;
+    },
+    async removeService(): Promise<void> {
+      this.removeServiceLoading = true;
+      if (this.serviceName)
+        await this.$store.dispatch("removeService", { name: this.serviceName });
+      this.removeServiceLoading = false;
+    },
+    async remountWDBlackDrive(): Promise<void> {
+      this.remountDriveLoading = true;
+      await this.$store.dispatch("remountWDBlackDrive");
+      this.remountDriveLoading = false;
     },
   },
 });
