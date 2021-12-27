@@ -15,7 +15,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card>
           <v-card-title>Deploy DreamScape</v-card-title>
           <v-card-actions>
@@ -29,7 +29,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
@@ -45,7 +45,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card>
           <v-card-title>Restart Plex</v-card-title>
           <v-card-actions>
@@ -59,7 +59,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card>
           <v-card-title>Remount Drive</v-card-title>
           <v-card-actions>
@@ -75,7 +75,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card class="pa-2">
           <v-card-title>Create Service</v-card-title>
           <v-text-field
@@ -107,7 +107,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12" lg="6">
         <v-card class="pa-2">
           <v-card-title>Remove Service</v-card-title>
           <v-text-field
