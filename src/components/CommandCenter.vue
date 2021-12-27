@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="text-center">
-      <v-col cols="4">
+      <v-col v-if="false" cols="4">
         <v-card>
           <v-card-title>Deploy CommandCenter</v-card-title>
           <v-card-actions>
@@ -15,7 +15,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="6">
         <v-card>
           <v-card-title>Deploy DreamScape</v-card-title>
           <v-card-actions>
@@ -29,7 +29,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="6">
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
