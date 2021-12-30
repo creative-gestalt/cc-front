@@ -18,6 +18,7 @@
       <v-col cols="12" lg="6">
         <v-card>
           <v-card-title>Deploy DreamScape</v-card-title>
+          <v-card-subtitle>{{ progress }}</v-card-subtitle>
           <v-card-actions>
             <v-btn
               @click="deployDreamscape"
@@ -179,6 +180,11 @@ export default Vue.extend({
       this.remountDriveLoading = true;
       await this.$store.dispatch("remountWDBlackDrive");
       this.remountDriveLoading = false;
+    },
+  },
+  computed: {
+    progress(): string {
+      return this.$store.getters.dreamProgress;
     },
   },
 });
