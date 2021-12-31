@@ -24,32 +24,33 @@ export default new Vuex.Store({
       return true;
     },
     async deployDreamscape({ commit }): Promise<void | boolean> {
+      const commands = [
+        { command: "stop-services" },
+        { command: "build-front" },
+        { command: "build-back" },
+        { command: "start-services" },
+      ];
       commit("SET_DREAM_PROGRESS", "stopping services");
       await axios
-        .post(`${url}/deploy_dreamscape`, { command: "stop-services" })
+        .post(`${url}/deploy_dreamscape`, commands[0])
         .then(async (response) => {
           commit("SET_DREAM_PROGRESS", response.data);
-          setTimeout(
-            () => commit("SET_DREAM_PROGRESS", "starting builds"),
-            100
-          );
+          commit("SET_DREAM_PROGRESS", "building frontend");
           await axios
-            .post(`${url}/deploy_dreamscape`, {
-              command: "build",
-            })
+            .post(`${url}/deploy_dreamscape`, commands[1])
             .then(async (response) => {
               commit("SET_DREAM_PROGRESS", response.data);
-              setTimeout(
-                () => commit("SET_DREAM_PROGRESS", "starting services"),
-                100
-              );
+              commit("SET_DREAM_PROGRESS", "building backend");
               await axios
-                .post(`${url}/deploy_dreamscape`, {
-                  command: "start-services",
-                })
-                .then((response) => {
+                .post(`${url}/deploy_dreamscape`, commands[2])
+                .then(async (response) => {
                   commit("SET_DREAM_PROGRESS", response.data);
-                  setTimeout(() => commit("SET_DREAM_PROGRESS", ""), 100);
+                  commit("SET_DREAM_PROGRESS", "starting services");
+                  await axios
+                    .post(`${url}/deploy_dreamscape`, commands[3])
+                    .then((response) => {
+                      setTimeout(() => commit("SET_DREAM_PROGRESS", ""), 250);
+                    });
                 });
             });
         });
