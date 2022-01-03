@@ -32,6 +32,21 @@
       </v-col>
       <v-col cols="12" lg="6">
         <v-card>
+          <v-card-title>Deploy DreamScape2</v-card-title>
+          <v-card-subtitle>{{ progress2 }}</v-card-subtitle>
+          <v-card-actions>
+            <v-btn
+              @click="deployDreamscape2"
+              :loading="dreamscape2Loading"
+              width="100%"
+            >
+              deploy
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="12" lg="6">
+        <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
             <v-btn
@@ -141,6 +156,7 @@ export default Vue.extend({
     serviceName: "",
     commandCenterLoading: false,
     dreamscapeLoading: false,
+    dreamscape2Loading: false,
     billTrackerLoading: false,
     plexLoading: false,
     createServiceLoading: false,
@@ -157,6 +173,11 @@ export default Vue.extend({
       this.dreamscapeLoading = true;
       await this.$store.dispatch("deployDreamscape");
       this.dreamscapeLoading = false;
+    },
+    async deployDreamscape2(): Promise<void> {
+      this.dreamscape2Loading = true;
+      await this.$store.dispatch("deployDreamscape2");
+      this.dreamscape2Loading = false;
     },
     async deployBillTracker(): Promise<void> {
       this.billTrackerLoading = true;
@@ -189,6 +210,9 @@ export default Vue.extend({
   computed: {
     progress(): string {
       return this.$store.getters.dreamProgress;
+    },
+    progress2(): string {
+      return this.$store.getters.dreamProgress2;
     },
   },
 });

@@ -12,9 +12,13 @@ const url = "http://192.168.1.250:3002";
 export default new Vuex.Store({
   state: {
     dreamscape_progress: "",
+    dreamscape_progress2: "",
   },
   mutations: {
     SET_DREAM_PROGRESS(state: State, value: string) {
+      state.dreamscape_progress = value;
+    },
+    SET_DREAM_PROGRESS2(state: State, value: string) {
       state.dreamscape_progress = value;
     },
   },
@@ -55,6 +59,38 @@ export default new Vuex.Store({
             });
         });
     },
+    async deployDreamscape2({ commit }): Promise<void | boolean> {
+      const commands = [
+        { command: "stop-services" },
+        { command: "build-front" },
+        { command: "build-back" },
+        { command: "start-services" },
+      ];
+      commit("SET_DREAM_PROGRESS2", "stopping services");
+      await axios
+        .post(`${url}/deploy_dreamscape2`, commands[0])
+        .then(async (response) => {
+          commit("SET_DREAM_PROGRESS2", response.data);
+          commit("SET_DREAM_PROGRESS2", "building frontend");
+          await axios
+            .post(`${url}/deploy_dreamscape2`, commands[1])
+            .then(async (response) => {
+              commit("SET_DREAM_PROGRESS2", response.data);
+              commit("SET_DREAM_PROGRESS2", "building backend");
+              await axios
+                .post(`${url}/deploy_dreamscape2`, commands[2])
+                .then(async (response) => {
+                  commit("SET_DREAM_PROGRESS2", response.data);
+                  commit("SET_DREAM_PROGRESS2", "starting services");
+                  await axios
+                    .post(`${url}/deploy_dreamscape2`, commands[3])
+                    .then((response) => {
+                      setTimeout(() => commit("SET_DREAM_PROGRESS2", ""), 250);
+                    });
+                });
+            });
+        });
+    },
     async deployBillTracker(): Promise<boolean> {
       await axios.get(`${url}/deploy_billtracker`);
       return true;
@@ -78,6 +114,7 @@ export default new Vuex.Store({
   },
   getters: {
     dreamProgress: (state: State): string => state.dreamscape_progress,
+    dreamProgress2: (state: State): string => state.dreamscape_progress2,
   },
   modules: {},
 });
