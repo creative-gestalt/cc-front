@@ -104,7 +104,9 @@
             dense
           ></v-text-field>
           <v-card-actions>
-            <v-btn @click="createService">submit</v-btn>
+            <v-btn :loading="createServiceLoading" @click="createService">
+              submit
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -166,8 +168,9 @@ export default Vue.extend({
     },
     async createService(): Promise<void> {
       this.createServiceLoading = true;
-      if (Object.keys(this.newService).length > 0)
-        await this.$store.dispatch("createService", this.newService);
+      console.log(this.newService);
+      // if (Object.keys(this.newService).length > 0)
+      //   await this.$store.dispatch("createService", this.newService);
       this.createServiceLoading = false;
     },
     async removeService(): Promise<void> {
