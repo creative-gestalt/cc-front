@@ -120,7 +120,9 @@
             dense
           ></v-text-field>
           <v-card-actions>
-            <v-btn @click="removeService">submit</v-btn>
+            <v-btn :loading="removeServiceLoading" @click="removeService"
+              >submit</v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
