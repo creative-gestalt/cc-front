@@ -168,9 +168,8 @@ export default Vue.extend({
     },
     async createService(): Promise<void> {
       this.createServiceLoading = true;
-      console.log(this.newService);
-      // if (Object.keys(this.newService).length > 0)
-      //   await this.$store.dispatch("createService", this.newService);
+      if (Object.keys(this.newService).length > 0)
+        await this.$store.dispatch("createService", this.newService);
       this.createServiceLoading = false;
     },
     async removeService(): Promise<void> {
