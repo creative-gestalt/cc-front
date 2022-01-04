@@ -1,9 +1,20 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">Command Center</div>
-
-      <v-spacer></v-spacer>
+      <v-row align="center" justify="center">
+        <v-col cols="5">
+          <div class="d-flex align-center">Command Center</div>
+        </v-col>
+        <v-col cols="1" class="mr-n10 ml-10">
+          <v-progress-circular
+            v-if="$store.getters.progress.length > 0"
+            indeterminate
+          ></v-progress-circular>
+        </v-col>
+        <v-col cols="6">
+          <div class="text-left">{{ $store.getters.progress }}</div>
+        </v-col>
+      </v-row>
     </v-app-bar>
 
     <v-main>

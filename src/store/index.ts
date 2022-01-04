@@ -11,15 +11,11 @@ const url = "http://192.168.1.250:3002";
 
 export default new Vuex.Store({
   state: {
-    dreamscape_progress: "",
-    dreamscape_progress2: "",
+    progress: "",
   },
   mutations: {
-    SET_DREAM_PROGRESS(state: State, value: string) {
-      state.dreamscape_progress = value;
-    },
-    SET_DREAM_PROGRESS2(state: State, value: string) {
-      state.dreamscape_progress = value;
+    SET_PROGRESS(state: State, value: string) {
+      state.progress = value;
     },
   },
   actions: {
@@ -27,65 +23,36 @@ export default new Vuex.Store({
       await axios.get(`${url}/deploy_commandcenter`);
       return true;
     },
-    async deployDreamscape({ commit }): Promise<void | boolean> {
+    async deployProject(
+      { commit },
+      payload: Record<string, string>
+    ): Promise<void | boolean> {
       const commands = [
-        { command: "stop-services" },
-        { command: "build-front" },
-        { command: "build-back" },
-        { command: "start-services" },
+        { command: "stop-services", projectName: payload.projectName },
+        { command: "build-front", projectName: payload.projectName },
+        { command: "build-back", projectName: payload.projectName },
+        { command: "start-services", projectName: payload.projectName },
       ];
-      commit("SET_DREAM_PROGRESS", "stopping services");
+      commit("SET_PROGRESS", "stopping services");
       await axios
-        .post(`${url}/deploy_dreamscape`, commands[0])
+        .post(`${url}/deploy_project`, commands[0])
         .then(async (response) => {
-          commit("SET_DREAM_PROGRESS", response.data);
-          commit("SET_DREAM_PROGRESS", "building frontend");
+          commit("SET_PROGRESS", response.data);
+          commit("SET_PROGRESS", "building frontend");
           await axios
-            .post(`${url}/deploy_dreamscape`, commands[1])
+            .post(`${url}/deploy_project`, commands[1])
             .then(async (response) => {
-              commit("SET_DREAM_PROGRESS", response.data);
-              commit("SET_DREAM_PROGRESS", "building backend");
+              commit("SET_PROGRESS", response.data);
+              commit("SET_PROGRESS", "building backend");
               await axios
-                .post(`${url}/deploy_dreamscape`, commands[2])
+                .post(`${url}/deploy_project`, commands[2])
                 .then(async (response) => {
-                  commit("SET_DREAM_PROGRESS", response.data);
-                  commit("SET_DREAM_PROGRESS", "starting services");
+                  commit("SET_PROGRESS", response.data);
+                  commit("SET_PROGRESS", "starting services");
                   await axios
-                    .post(`${url}/deploy_dreamscape`, commands[3])
+                    .post(`${url}/deploy_project`, commands[3])
                     .then((response) => {
-                      setTimeout(() => commit("SET_DREAM_PROGRESS", ""), 250);
-                    });
-                });
-            });
-        });
-    },
-    async deployDreamscape2({ commit }): Promise<void | boolean> {
-      const commands = [
-        { command: "stop-services" },
-        { command: "build-front" },
-        { command: "build-back" },
-        { command: "start-services" },
-      ];
-      commit("SET_DREAM_PROGRESS2", "stopping services");
-      await axios
-        .post(`${url}/deploy_dreamscape2`, commands[0])
-        .then(async (response) => {
-          commit("SET_DREAM_PROGRESS2", response.data);
-          commit("SET_DREAM_PROGRESS2", "building frontend");
-          await axios
-            .post(`${url}/deploy_dreamscape2`, commands[1])
-            .then(async (response) => {
-              commit("SET_DREAM_PROGRESS2", response.data);
-              commit("SET_DREAM_PROGRESS2", "building backend");
-              await axios
-                .post(`${url}/deploy_dreamscape2`, commands[2])
-                .then(async (response) => {
-                  commit("SET_DREAM_PROGRESS2", response.data);
-                  commit("SET_DREAM_PROGRESS2", "starting services");
-                  await axios
-                    .post(`${url}/deploy_dreamscape2`, commands[3])
-                    .then((response) => {
-                      setTimeout(() => commit("SET_DREAM_PROGRESS2", ""), 250);
+                      setTimeout(() => commit("SET_PROGRESS", ""), 250);
                     });
                 });
             });
@@ -113,8 +80,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    dreamProgress: (state: State): string => state.dreamscape_progress,
-    dreamProgress2: (state: State): string => state.dreamscape_progress2,
+    progress: (state: State): string => state.progress,
   },
   modules: {},
 });

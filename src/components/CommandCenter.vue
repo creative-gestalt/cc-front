@@ -15,37 +15,27 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="12" lg="6">
+      <v-col cols="12" md="4" lg="4">
         <v-card>
           <v-card-title>Deploy DreamScape</v-card-title>
-          <v-card-subtitle>{{ progress }}</v-card-subtitle>
           <v-card-actions>
-            <v-btn
-              @click="deployDreamscape"
-              :loading="dreamscapeLoading"
-              width="100%"
-            >
+            <v-btn @click="deployProject('dreamscape')" width="100%">
               deploy
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="12" lg="6">
+      <v-col cols="12" md="4" lg="4">
         <v-card>
           <v-card-title>Deploy DreamScape2</v-card-title>
-          <v-card-subtitle>{{ progress2 }}</v-card-subtitle>
           <v-card-actions>
-            <v-btn
-              @click="deployDreamscape2"
-              :loading="dreamscape2Loading"
-              width="100%"
-            >
+            <v-btn @click="deployProject('dreamscape-l')" width="100%">
               deploy
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="12" lg="6">
+      <v-col cols="12" md="4" lg="4">
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
@@ -155,8 +145,7 @@ export default Vue.extend({
     newService: {} as Service,
     serviceName: "",
     commandCenterLoading: false,
-    dreamscapeLoading: false,
-    dreamscape2Loading: false,
+    loading: false,
     billTrackerLoading: false,
     plexLoading: false,
     createServiceLoading: false,
@@ -169,15 +158,10 @@ export default Vue.extend({
       await this.$store.dispatch("deployCommandCenter");
       this.commandCenterLoading = false;
     },
-    async deployDreamscape(): Promise<void> {
-      this.dreamscapeLoading = true;
-      await this.$store.dispatch("deployDreamscape");
-      this.dreamscapeLoading = false;
-    },
-    async deployDreamscape2(): Promise<void> {
-      this.dreamscape2Loading = true;
-      await this.$store.dispatch("deployDreamscape2");
-      this.dreamscape2Loading = false;
+    async deployProject(projectName: string): Promise<void> {
+      this.loading = true;
+      await this.$store.dispatch("deployProject", { projectName: projectName });
+      this.loading = false;
     },
     async deployBillTracker(): Promise<void> {
       this.billTrackerLoading = true;
@@ -209,10 +193,7 @@ export default Vue.extend({
   },
   computed: {
     progress(): string {
-      return this.$store.getters.dreamProgress;
-    },
-    progress2(): string {
-      return this.$store.getters.dreamProgress2;
+      return this.$store.getters.progress;
     },
   },
 });
