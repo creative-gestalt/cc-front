@@ -15,17 +15,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="12" md="4" lg="4">
-        <v-card>
-          <v-card-title>Deploy DreamScape</v-card-title>
-          <v-card-actions>
-            <v-btn @click="deployProject('dreamscape')" width="100%">
-              deploy
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="4" lg="4">
+      <v-col v-if="false" cols="12" md="4" lg="4">
         <v-card>
           <v-card-title>Deploy DreamScape2</v-card-title>
           <v-card-actions>
@@ -35,7 +25,17 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col cols="12" md="4" lg="4">
+      <v-col cols="12" md="6" lg="6">
+        <v-card>
+          <v-card-title>Deploy DreamScape</v-card-title>
+          <v-card-actions>
+            <v-btn @click="deployProject('dreamscape')" width="100%">
+              deploy
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" lg="6">
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
