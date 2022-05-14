@@ -92,13 +92,13 @@
           ></v-text-field>
           <v-text-field
             v-model="newService.workdir"
-            placeholder="Working Directory"
+            placeholder="Working Directory '/home/nick/'"
             outlined
             dense
           ></v-text-field>
           <v-text-field
             v-model="newService.package"
-            placeholder="Package Name 'npm' or 'serve'"
+            placeholder="Package Name 'npm (backend)' or 'serve (frontend)'"
             outlined
             dense
           ></v-text-field>
