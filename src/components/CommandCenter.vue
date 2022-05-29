@@ -25,7 +25,7 @@
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
-            <v-btn @click="deployProject('bill_tracker')" width="100%">
+            <v-btn @click="deployProject('billtracker')" width="100%">
               deploy
             </v-btn>
           </v-card-actions>
