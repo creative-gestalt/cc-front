@@ -27,36 +27,13 @@ export default new Vuex.Store({
       { commit },
       payload: Record<string, string>
     ): Promise<void | boolean> {
-      const commands = [
-        { command: "stop-services", projectName: payload.projectName },
-        { command: "build-front", projectName: payload.projectName },
-        { command: "build-back", projectName: payload.projectName },
-        { command: "start-services", projectName: payload.projectName },
-      ];
-      commit("SET_PROGRESS", "stopping services");
+      commit("SET_PROGRESS", "Docker Building");
       await axios
-        .post(`${url}/deploy_project`, commands[0])
-        .then(async (response) => {
-          commit("SET_PROGRESS", response.data);
-          commit("SET_PROGRESS", "building frontend");
-          await axios
-            .post(`${url}/deploy_project`, commands[1])
-            .then(async (response) => {
-              commit("SET_PROGRESS", response.data);
-              commit("SET_PROGRESS", "building backend");
-              await axios
-                .post(`${url}/deploy_project`, commands[2])
-                .then(async (response) => {
-                  commit("SET_PROGRESS", response.data);
-                  commit("SET_PROGRESS", "starting services");
-                  await axios
-                    .post(`${url}/deploy_project`, commands[3])
-                    .then((response) => {
-                      setTimeout(() => commit("SET_PROGRESS", ""), 250);
-                    });
-                });
-            });
+        .post(`${url}/deploy_project`, { projectName: payload.projectName })
+        .then(() => {
+          commit("SET_PROGRESS", "Finished");
         });
+      setTimeout(() => commit("SET_PROGRESS", ""), 250);
     },
     async deployBillTracker(): Promise<boolean> {
       await axios.get(`${url}/deploy_billtracker`);
