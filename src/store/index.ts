@@ -19,10 +19,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async deployCommandCenter(): Promise<boolean> {
-      await axios.get(`${url}/deploy_commandcenter`);
-      return true;
-    },
     async deployProject(
       { commit },
       payload: Record<string, string>
@@ -35,16 +31,8 @@ export default new Vuex.Store({
         });
       setTimeout(() => commit("SET_PROGRESS", ""), 250);
     },
-    async deployBillTracker(): Promise<boolean> {
-      await axios.get(`${url}/deploy_billtracker`);
-      return true;
-    },
     async restartPlexServices(): Promise<boolean> {
       await axios.get(`${url}/restart_plex_services`);
-      return true;
-    },
-    async remountWDBlackDrive(): Promise<boolean> {
-      await axios.get(`${url}/remount_wd_drive`);
       return true;
     },
     async createService({ commit }, service: Service): Promise<boolean> {

@@ -1,20 +1,6 @@
 <template>
   <v-container>
     <v-row class="text-center">
-      <v-col v-if="false" cols="4">
-        <v-card>
-          <v-card-title>Deploy CommandCenter</v-card-title>
-          <v-card-actions>
-            <v-btn
-              @click="deployCommandCenter"
-              :loading="commandCenterLoading"
-              width="100%"
-            >
-              deploy
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
       <v-col cols="12" md="6" lg="6">
         <v-card>
           <v-card-title>Deploy DreamScape</v-card-title>
@@ -39,11 +25,7 @@
         <v-card>
           <v-card-title>Deploy BillTracker</v-card-title>
           <v-card-actions>
-            <v-btn
-              @click="deployBillTracker"
-              :loading="billTrackerLoading"
-              width="100%"
-            >
+            <v-btn @click="deployProject('bill_tracker')" width="100%">
               deploy
             </v-btn>
           </v-card-actions>
@@ -61,20 +43,6 @@
               width="100%"
             >
               restart
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="12" lg="6">
-        <v-card>
-          <v-card-title>Remount Drive</v-card-title>
-          <v-card-actions>
-            <v-btn
-              @click="remountWDBlackDrive"
-              :loading="remountDriveLoading"
-              width="100%"
-            >
-              remount
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -144,29 +112,16 @@ export default Vue.extend({
   data: () => ({
     newService: {} as Service,
     serviceName: "",
-    commandCenterLoading: false,
     loading: false,
-    billTrackerLoading: false,
     plexLoading: false,
     createServiceLoading: false,
     removeServiceLoading: false,
-    remountDriveLoading: false,
   }),
   methods: {
-    async deployCommandCenter(): Promise<void> {
-      this.commandCenterLoading = true;
-      await this.$store.dispatch("deployCommandCenter");
-      this.commandCenterLoading = false;
-    },
     async deployProject(projectName: string): Promise<void> {
       this.loading = true;
       await this.$store.dispatch("deployProject", { projectName: projectName });
       this.loading = false;
-    },
-    async deployBillTracker(): Promise<void> {
-      this.billTrackerLoading = true;
-      await this.$store.dispatch("deployBillTracker");
-      this.billTrackerLoading = false;
     },
     async restartPlexServices(): Promise<void> {
       this.plexLoading = true;
@@ -178,17 +133,19 @@ export default Vue.extend({
       if (Object.keys(this.newService).length > 0)
         await this.$store.dispatch("createService", this.newService);
       this.createServiceLoading = false;
+      this.newService = {
+        name: "",
+        workdir: "",
+        package: "",
+        frontPort: "",
+      };
     },
     async removeService(): Promise<void> {
       this.removeServiceLoading = true;
       if (this.serviceName)
         await this.$store.dispatch("removeService", { name: this.serviceName });
       this.removeServiceLoading = false;
-    },
-    async remountWDBlackDrive(): Promise<void> {
-      this.remountDriveLoading = true;
-      await this.$store.dispatch("remountWDBlackDrive");
-      this.remountDriveLoading = false;
+      this.serviceName = "";
     },
   },
   computed: {
