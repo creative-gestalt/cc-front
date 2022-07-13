@@ -28,7 +28,8 @@ export default new Vuex.Store({
         .post(`${url}/deploy_project`, { projectName: payload.projectName })
         .then(() => {
           commit("SET_PROGRESS", "Finished");
-        });
+        })
+        .catch((error) => commit("SET_PROGRESS", error));
       setTimeout(() => commit("SET_PROGRESS", ""), 250);
     },
     async restartPlexServices(): Promise<boolean> {
