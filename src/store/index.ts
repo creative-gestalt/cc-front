@@ -27,7 +27,10 @@ export default new Vuex.Store({
       await axios
         .post(`${url}/deploy_project`, { projectName: payload.projectName })
         .then((result) => {
-          commit("SET_PROGRESS", (result === true ? "Finished" : result));
+          commit(
+            "SET_PROGRESS",
+            result.data === true ? "Finished" : result.data
+          );
         })
         .catch((error) => commit("SET_PROGRESS", error));
       setTimeout(() => commit("SET_PROGRESS", ""), 250);
