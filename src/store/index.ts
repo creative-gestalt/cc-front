@@ -33,7 +33,6 @@ export default new Vuex.Store({
           );
         })
         .catch((error) => commit("SET_PROGRESS", error));
-      setTimeout(() => commit("SET_PROGRESS", ""), 250);
     },
     async restartPlexServices(): Promise<boolean> {
       await axios.get(`${url}/restart_plex_services`);
