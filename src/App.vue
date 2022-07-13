@@ -5,7 +5,10 @@
       <v-spacer></v-spacer>
       <div class="mr-5">{{ $store.getters.progress }}</div>
       <v-progress-circular
-        v-if="$store.getters.progress.length > 0"
+        v-if="
+          $store.getters.progress.length > 0 ||
+          $store.getters.progress === 'Finished'
+        "
         indeterminate
       ></v-progress-circular>
     </v-app-bar>
