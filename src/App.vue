@@ -7,7 +7,7 @@
       <v-progress-circular
         v-if="
           $store.getters.progress.length > 0 ||
-          $store.getters.progress === 'Finished'
+          $store.getters.progress !== 'Finished'
         "
         indeterminate
       ></v-progress-circular>
