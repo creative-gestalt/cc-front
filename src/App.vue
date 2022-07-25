@@ -28,7 +28,8 @@ import { io } from "socket.io-client";
 export default Vue.extend({
   name: "App",
   created(): void {
-    const socket = io("ws://192.168.1.189:3002");
+    // const socket = io("ws://192.168.1.189:3002");
+    const socket = io("ws://192.168.1.250:3002");
     socket.on("progress", (data: any) => {
       this.$store.commit("SET_PROGRESS", data);
     });
