@@ -7,8 +7,8 @@ import { io } from "socket.io-client";
 
 Vue.use(Vuex);
 
-// const url = "http://192.168.1.250:3002";
-const url = "http://localhost:3002";
+const url = "http://192.168.1.250:3002";
+// const url = "http://localhost:3002";
 
 export default new Vuex.Store({
   state: {
