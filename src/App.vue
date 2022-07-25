@@ -7,7 +7,7 @@
       <v-progress-circular
         v-if="
           $store.getters.progress.length > 0 &&
-          $store.getters.progress !== 'Finished'
+          !$store.getters.progress.includes('Error:')
         "
         indeterminate
       ></v-progress-circular>
@@ -21,13 +21,18 @@
 
 <script lang="ts">
 import Vue from "vue";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { io } from "socket.io-client";
 
 export default Vue.extend({
   name: "App",
-
-  data: () => ({
-    //
-  }),
+  created(): void {
+    const socket = io("ws://192.168.1.189:3002");
+    socket.on("progress", (data: any) => {
+      this.$store.commit("SET_PROGRESS", data);
+    });
+  },
 });
 </script>
 <style lang="scss">

@@ -3,11 +3,12 @@ import Vuex, { Store } from "vuex";
 import axios from "axios";
 import { Service } from "@/interfaces/service.interface";
 import { State } from "@/interfaces/store.interface";
+import { io } from "socket.io-client";
 
 Vue.use(Vuex);
 
-const url = "http://192.168.1.250:3002";
-// const url = "http://localhost:3002";
+// const url = "http://192.168.1.250:3002";
+const url = "http://localhost:3002";
 
 export default new Vuex.Store({
   state: {
@@ -23,16 +24,9 @@ export default new Vuex.Store({
       { commit },
       payload: Record<string, string>
     ): Promise<void | boolean> {
-      commit("SET_PROGRESS", "Docker Building");
-      await axios
-        .post(`${url}/deploy_project`, { projectName: payload.projectName })
-        .then((result) => {
-          commit(
-            "SET_PROGRESS",
-            result.data === true ? "Finished" : result.data
-          );
-        })
-        .catch((error) => commit("SET_PROGRESS", error));
+      await axios.post(`${url}/deploy_project`, {
+        projectName: payload.projectName,
+      });
     },
     async restartPlexServices(): Promise<boolean> {
       await axios.get(`${url}/restart_plex_services`);
